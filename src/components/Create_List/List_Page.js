@@ -98,7 +98,7 @@ class List_Page extends Component {
         }
         let {selectedFood, selectedCity, numOfStores, radius, products} = this.state;
         let {lat, lng} = this.props.data.location.coords;
-        let url = `http://appriceapi.herokuapp.com/api/stores/search?lat=${lat}&long=${lng}&radius=${radius}`;
+        let url = `https://appriceapi.herokuapp.com/api/stores/search?lat=${lat}&long=${lng}&radius=${radius}`;
         let stores = await axios.get(url);
         this.setState({lat: lat, lng: lng})
         let oneStoreData = {
