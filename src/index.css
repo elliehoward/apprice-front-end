@@ -1,5 +1,5 @@
 body {
-    background-image: url('./home.jpg');
+    background-image: url('../style/home.jpg');
     background-repeat: no-repeat;
     background-size: 100vw 100vh;
     background-attachment: cover;
@@ -228,7 +228,7 @@ p {
     font-size: 30px;
     border-bottom: 0;
     margin-left: 5%;
-    background-image: url('./Logo-Lowercase.png');
+    background-image: url('../style/Logo-Lowercase.png');
     height: 38px;
     width: 600%;
     background-size: contain;
@@ -254,7 +254,7 @@ p {
     width: 80%;
 }
 #OneStore-Picture {
-    background-image: url(./OneStore.jpg);
+    background-image: url(../style/OneStore.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -426,7 +426,7 @@ p {
     width: 100%;
 }
 #login-background {
-    background: url('./Sunberry.jpg') no-repeat center center fixed;
+    background: url('../style/Sunberry.jpg') no-repeat center center fixed;
     background-repeat: no-repeat;
     background-size: 100vw 100vh;
     background-attachment: cover;
@@ -436,7 +436,7 @@ p {
     padding: 0;
 }
 #signup-background {
-    background: url('./chips.jpg');
+    background: url('../style/chips.jpg');
     background-repeat: no-repeat;
     background-size: 100vw 100vh;
     background-attachment: cover;
@@ -514,7 +514,7 @@ p {
     /*padding-bottom: 8%;*/
     /*padding-top: 5%;*/
     /*background-color:  rgba(0,0,0,.2);*/
-    background: url('./background.jpg');
+    background: url('../style/background.jpg');
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -525,7 +525,7 @@ p {
     width: 100vw;
     /*margin-top: 0;*/
     /*padding: 0;*/
-    /*background: url('./background.jpg')*/
+    /*background: url('../style/background.jpg')*/
 }
 .content-container {
     /* padding-top: 5%; */
@@ -675,7 +675,7 @@ p {
 }
 #help-image-1 {
     width: 30%;
-    background-image: url('./Product_Get_StartedList_Page.png');
+    background-image: url('../style/Product_Get_StartedList_Page.png');
     height: 600px;
     background-size: cover;
     background-position: center;
@@ -683,7 +683,7 @@ p {
 }
 #help-image-2 {
     width: 30%;
-    background-image: url('./Location_Search.png');
+    background-image: url('../style/Location_Search.png');
     height: 600px;
     background-size: cover;
     background-position: center;
@@ -691,7 +691,7 @@ p {
 }
 #help-image-3 {
     width: 30%;
-    background-image: url('./Result_Get_Started.png');
+    background-image: url('../style/Result_Get_Started.png');
     height: 600px;
     background-size: cover;
     background-position: center;
