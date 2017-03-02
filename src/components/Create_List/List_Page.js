@@ -158,23 +158,36 @@ class List_Page extends Component {
 
         return (
             <div className="container">
-                <div className="content-container">
-                    <div id="list-container">
+                {/* <div className="content-container"> */}
+                <div className="row">
+                    <div className="column column-12">
+                        <div className="column column-8">
+                    {/* <div id="list-container"> */}
+                        <div className="style-container" id="column8-style">
+                        <div className="image-align-container">
                         <h2>Choose your groceries</h2>
                         <SearchBar foodSearch={this.specificFoodSearch}/>
                         <ImageList handleClick={this.handleClick} groceries={genericGroceries}/>
+                        </div>
+                        <div className="list-align-container">
                         <h3 id="shopping-title">Shopping List</h3>
                         <div id="list">
                             <Grocery_List groceries={products} onToggle={this.handleToggle}/>
                         </div>
+                        </div>
                     </div>
-                    <div id="map-container">
+                    </div>
+                    <div className="column column-4">
+                    {/* <div id="map-container"> */}
+                        <div className="style-container" id="column4-style">
                         <Map numOfStores={this.numberOfStores} selectCity={this.selectCity} stateLat={lat} stateLng={lng} radius={radius} getRadius={this.getRadius}/>
                         <div id="apprice-btn-container">
                             <Link id="Apprice-me" to={this.state.link} onClick={this.submitData}>Apprice Me</Link>
                         </div>
                     </div>
+                    </div>
                 </div>
+            </div>
             </div>
         )
     }

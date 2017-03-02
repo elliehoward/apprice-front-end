@@ -69,7 +69,9 @@ class Map extends Component {
                 <Range id="store-radius" onChange={this.handleChange} type='range' value={radius} min={1} max={10}/>
                 <span id="display-radius">{radius}
                     mi</span><br/>
-                <iframe id="google-map" width="350" height="300" frameBorder="0" src={yourLocation} allowFullScreen></iframe>
+                <div className="google-maps">
+                <iframe id="google-map" width="100%" height="300" frameBorder="0" src={yourLocation} allowFullScreen></iframe>
+                </div>
             </div>
         )
     }

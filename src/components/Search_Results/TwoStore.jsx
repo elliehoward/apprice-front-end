@@ -55,6 +55,7 @@ class TwoStore extends Component {
                 <div className="row">
                     <div className="column column-12">
                         <div className="column column-4">
+                            <div className="style-container style-container-margin">
                             <div className="store-container">
                                 <div className="row">
                                     <div className="store">
@@ -80,7 +81,9 @@ class TwoStore extends Component {
                                 <Grocery_List groceries={store1.products}/>
                             </div>
                         </div>
+                    </div>
                         <div className="column column-4">
+                            <div className="style-container style-container-margin">
                             <div className="store-container">
                                 <div className="row">
                                     <div className="store">
@@ -106,7 +109,10 @@ class TwoStore extends Component {
                                 <Grocery_List groceries={store2.products}/>
                             </div>
                         </div>
+                    </div>
+
                         <div className="column column-4">
+                            <div className="style-container style-container-margin">
                             <div className="row">
                                 <ReactMap/>
                             </div>
@@ -142,6 +148,7 @@ class TwoStore extends Component {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

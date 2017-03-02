@@ -1,140 +1,88 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
-import Grocery_List from '../Create_List/Grocery_List';
+import SearchBarMap from './Search_Bar_Map'
+import Range from 'react-range';
 import {connect} from 'react-redux';
-import ReactMap from '../Create_List/ReactMap';
 import {bindActionCreators} from 'redux';
-import {numOfStores} from '../../actions/index';
-class OneStore extends Component {
+import {storeLocation} from '../../actions/index';
+import ReactMap from './ReactMap';
+const GOOGLE_MAPS_EMBED_API = `AIzaSyBqGn70hACTBdMyntztMhqiTbH0w5Uzw38`
+// 🗺
+class Map extends Component {
     constructor(props) {
-        super(props);
+        super(props)
+        this.state = {
+            location: '',
+            lat: '',
+            lon: '',
+            term: '',
+            numOfStores: 3,
+            button1: 'store-button-inactive',
+            button2: 'store-button-active',
+            button3: 'store-button-inactive'
 
-        this.subPrice = this.subPrice.bind(this);
-        this.simplify = this.simplify.bind(this);
+        }
+        this.getLocation = this.getLocation.bind(this);
+        this.buttonOne = this.buttonOne.bind(this);
+        this.buttonTwo = this.buttonTwo.bind(this);
+        this.buttonThree = this.buttonThree.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.getLocation();
     }
-    simplify(price) {
-        let total = (Math.round(price * Math.pow(10, 2)) / Math.pow(10, 2))
-        return total.toFixed(2);
-    }
-    subPrice(list) {
-        let total = 0;
-        console.log(`i'm the list in the subPrice func`, list);
-        list.products.forEach((item) => {
-            total += item.price;
+    async getLocation() {
+        await navigator.geolocation.getCurrentPosition((position) => {
+
+            this.props.storeLocation(position)
         })
-        total = (Math.round(total * Math.pow(10, 2)) / Math.pow(10, 2))
-        return total;
+    }
+    buttonOne() {
+        this.props.numOfStores(1);
+        this.setState({button1: 'store-button-active', button2: 'store-button-inactive', button3: 'store-button-inactive'})
+    }
+    buttonTwo() {
+        this.props.numOfStores(2);
+        this.setState({button1: 'store-button-inactive', button2: 'store-button-active', button3: 'store-button-inactive'})
+    }
+    buttonThree() {
+        this.props.numOfStores(3);
+        this.setState({button1: 'store-button-inactive', button2: 'store-button-inactive', button3: 'store-button-active'})
+    }
+    handleChange(event) {
+        let {value} = event.target;
+        let {getRadius} = this.props;
+        getRadius(value)
     }
     render() {
-        let {lat, lng} = this.props.data.location.coords;
-        let url = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBqGn70hACTBdMyntztMhqiTbH0w5Uzw38&q=${lat},${lng}`
-        if (this.props.data.twoStore.length === 0) {
-            return (
-                <div className="container">
-                    <div className="loading">Loading...</div>
-                </div>
-            )
-        }
-        let store1 = this.props.data.oneStore[0];
-        let twoStop = this.props.data.twoStore;
-        let store1Price = this.subPrice(store1)
-        console.log(`i'm the twoStop[0]`, twoStop[0]);
-        let store2FirstStop = this.subPrice(twoStop[0]);
-        let store2SecondStop = this.subPrice(twoStop[1]);
-        let store2Total = store2FirstStop + store2SecondStop;
-        console.log(`i'm the twoStop`, twoStop);
-        console.log(`i'm the store2Price`, store2Total);
+        let {button1, button2, button3} = this.state;
+        let {radius} = this.props;
+        let {lat, lng} = this.props.data.location.coords
+        let yourLocation = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBqGn70hACTBdMyntztMhqiTbH0w5Uzw38&q=${lat},${lng}`
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="column column-12">
-                        <div className="column column-4" id="OneStore-Picture"></div>
-                        <div className="column column-4">
-                            <div className="store-container">
-                                <div className="row">
-                                    <div className="store">
-                                        <div className="store-info">
-                                            <h2>{store1.name}</h2>
-                                            <ul className="store-contact">
-                                                <li>
-                                                    <strong>Address:
-                                                    </strong>{store1.address}</li><br/>
-                                                <li>
-                                                    <strong>Contact:
-                                                    </strong>{store1.phone_number}</li>
-                                            </ul>
-                                        </div>
-                                        <img className="store-image" src={store1.store_image_url} alt=""/>
-                                    </div>
-                                </div>
-                                <hr className="list-hr"/>
-                                <h4 className="subPrice">Subtotal: ${this.subPrice(store1)}</h4>
-                                <br/>
-                                <Grocery_List groceries={store1.products}/>
-                            </div>
-                        </div>
-                        <div className="column column-4">
-                            <div className="row">
-                                {/* <iframe id="google-map" width="100%" height="300" frameBorder="0" src={url} allowFullScreen></iframe> */}
-                                <ReactMap/>
-                            </div>
-                            <div className="row">
-                                <div className="total">
-                                    <h3>Apprice Total: ${this.simplify(this.subPrice(store1))}
-                                    </h3><br/>
-                        <h4>You spent: ${this.simplify(store1Price - store2Total)} more</h4>
-                                    <h5 className="compare-text">Compared to:</h5>
-                                    <Link className="store-link-btn" to="/TwoStore">Two Store Option</Link>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="One-Stop-Option">
-                                    <div className="store twoStore-compare">
-                                        <div className="store-info">
-                                            <h2>{twoStop[0].name}</h2>
-                                        </div>
-                                        {/* <img className="store-image" src={twoStop[0].store_image_url} alt=""/> */}
-                                        <h3>
-                                            <strong>Subtotal: </strong> ${this.simplify(this.subPrice(twoStop[0]))}</h3>
-                                    </div>
-                                    <div className="row">
-                                        <div className="store twoStore-compare">
-                                            <div className="store-info">
-                                                <h2>{twoStop[1].name}</h2>
-                                            </div>
-                                            {/* <img className="store-image" src={twoStop[0].store_image_url} alt=""/> */}
-                                            <h3>
-                                                <strong>Subtotal: </strong>
-                                                ${this.simplify(this.subPrice(twoStop[1]))}</h3>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="store twoStore-compare">
-                                            <div className="store-info">
-                                                {/* <h2>Total:</h2> */}
-                                            </div>
-                                            {/* <img className="store-image" src={twoStop[0].store_image_url} alt=""/> */}
-                                            <h3>
-                                                <strong>Total: </strong>
-                                                ${this.simplify((this.subPrice(twoStop[0]) + this.subPrice(twoStop[1])))}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div>
+                <h3>Choose your search preferences</h3><br/>
+                <h4>What's your location?</h4>
+                <SearchBarMap selectCity={this.props.selectCity} getLocation={this.getLocation}/><br/>
+                <h4>How many stores will you visit?</h4>
+                <button className={button1} onClick={this.buttonOne}>One</button>
+                <button className={button2} onClick={this.buttonTwo}>Two</button>
+                <button className={button3} onClick={this.buttonThree}>Three</button><br/>
+                <h4>What's your search radius?</h4>
+                <Range id="store-radius" onChange={this.handleChange} type='range' value={radius} min={1} max={10}/>
+                <span id="display-radius">{radius}
+                    mi</span><br/>
+                <div className="google-maps">
+                <iframe id="google-map" width="100%" height="300" frameBorder="0" src={yourLocation} allowFullScreen></iframe>
                 </div>
             </div>
         )
     }
 }
+
 function mapStateToProps(state) {
-    return {data: state.data};
+    return {data: state.data}
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        numOfStores: numOfStores
+        storeLocation: storeLocation
     }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(OneStore);
+export default connect(mapStateToProps, mapDispatchToProps)(Map)
